@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Test - Kantin Sehat Sekolah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-800 font-sans p-4 md:p-8">
+
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-6 md:p-8">
+        <!-- HEADER KUIS -->
+        <header class="border-b pb-4 mb-6">
+            <h1 class="text-2xl md:text-3xl font-bold text-blue-700">POST TEST: KANTIN SEHAT SEKOLAH</h1>
+            <p class="text-sm text-slate-500">Mata Pelajaran: Matematika | Kelas V | Waktu: 90 Menit</p>
+        </header>
+
+        <!-- FORM IDENTITAS SISWA -->
+        <div id="identitasSection" class="mb-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <h2 class="font-bold text-lg text-blue-900 mb-3">Data Peserta Didik</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Nama Lengkap:</label>
+                    <input type="text" id="inputNama" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Masukkan nama lengkap">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Nomor Presensi / Kelas:</label>
+                    <input type="text" id="inputAbsen" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Contoh: 12 / 5B">
+                </div>
+            </div>
+            <button onclick="mulaiKuis()" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition">Mulai Kerjakan</button>
+        </div>
+
+        <!-- AREA KUIS (HIDDEN SEBELUM MULAI) -->
+        <div id="kuisSection" class="hidden">
+            
+            <!-- STICKY WACANA -->
+            <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-lg mb-6 sticky top-2 z-10 shadow-sm">
+                <h3 class="font-bold text-emerald-900 mb-2">📖 Wacana: Kantin Sehat Sekolah</h3>
+                <p class="text-sm mb-3">Di SD Maju Jaya, kelas 5 diberi tugas untuk mengelola "Kantin Sehat Sekolah" setiap hari Jumat. Modal awal adalah Rp250.000,00.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left border-collapse border border-emerald-300 bg-white">
+                        <thead class="bg-emerald-100">
+                            <tr>
+                                <th class="border border-emerald-300 p-2">Barang</th>
+                                <th class="border border-emerald-300 p-2">Harga Satuan</th>
+                                <th class="border border-emerald-300 p-2">Jumlah Terjual</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="border border-emerald-300 p-2">Roti</td><td class="border border-emerald-300 p-2">Rp4.500,00</td><td class="border border-emerald-300 p-2">50 buah</td></tr>
+                            <tr><td class="border border-emerald-300 p-2">Susu kotak</td><td class="border border-emerald-300 p-2">Rp3.500,00</td><td class="border border-emerald-300 p-2">40 buah</td></tr>
+                            <tr><td class="border border-emerald-300 p-2">Buah potong</td><td class="border border-emerald-300 p-2">Rp2.500,00</td><td class="border border-emerald-300 p-2">20 buah</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CONTAINER SOAL -->
+            <form id="quizForm" class="space-y-8">
+                <!-- BAGIAN I -->
+                <div class="border-t pt-4">
+                    <h3 class="font-bold text-xl text-slate-800 mb-4">Bagian I: Pilihan Ganda (Skor 1 per soal)</h3>
+                    
+                    <!-- Q1 -->
+                    <div class="mb-6 p-4 bg-slate-50 rounded border">
+                        <p class="font-semibold mb-2">1. Hitung total penjualan roti pada kegiatan "Kantin Sehat Sekolah" tersebut. Jika kamu mengalikan angka 1 pada hasil yang diperoleh, maka hasil akhirnya menjadi ....</p>
+                        <div class="space-y-1 text-sm">
+                            <label class="block"><input type="radio" name="q1" value="A"> A. Rp1,00</label>
+                            <label class="block"><input type="radio" name="q1" value="B"> B. Rp205.000,00</label>
+                            <label class="block"><input type="radio" name="q1" value="C"> C. Rp215.000,00</label>
+                            <label class="block"><input type="radio" name="q1" value="D"> D. Rp225.000,00</label>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="mb-6 p-4 bg-slate-50 rounded border">
+                        <p class="font-semibold mb-2">2. Total penjualan susu kotak dan buah potong dapat dihitung dengan cara berikut: 140.000 + 50.000 atau 50.000 + 140.000. Operasi hitung di atas merupakan contoh dari sifat ....</p>
+                        <div class="space-y-1 text-sm">
+                            <label class="block"><input type="radio" name="q2" value="A"> A. Asosiatif</label>
+                            <label class="block"><input type="radio" name="q2" value="B"> B. Komutatif</label>
+                            <label class="block"><input type="radio" name="q2" value="C"> C. Distributif</label>
+                            <label class="block"><input type="radio" name="q2" value="D"> D. Identitas</label>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="mb-6 p-4 bg-slate-50 rounded border">
+                        <p class="font-semibold mb-2">3. Tentukan urutan sifat operasi hitung yang tepat untuk pernyataan (a) sampai (g) berikut secara berturut-turut!</p>
+                        <p class="text-xs text-slate-600 mb-2">a. (4.000 + 3.500) + 2.500 = 4.000 + (3.500 + 2.500)<br>b. 10 × (4.000 + 3.500) = (10 × 4.000) + (10 × 3.500)<br>c. 2.500 × 20 = 20 × 2.500<br>d. 4.000 + 0 = 4.000<br>e. 3.500 – 3.500 = 0<br>f. 2.500 × 1 = 2.500<br>g. 40 × 1/40 = 1</p>
+                        <div class="space-y-1 text-sm">
+                            <label class="block"><input type="radio" name="q3" value="A"> A. Distributif, Asosiatif, Komutatif, Invers, Identitas, Invers, Identitas</label>
+                            <label class="block"><input type="radio" name="q3" value="B"> B. Asosiatif, Distributif, Komutatif, Identitas, Invers, Identitas, Invers</label>
+                            <label class="block"><input type="radio" name="q3" value="C"> C. Komutatif, Asosiatif, Distributif, Identitas, Invers, Identitas, Invers</label>
+                            <label class="block"><input type="radio" name="q3" value="D"> D. Asosiatif, Komutatif, Distributif, Identitas, Invers, Invers, Identitas</label>
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="mb-6 p-4 bg-slate-50 rounded border">
+                        <p class="font-semibold mb-2">4. Kalimat matematika yang tepat berdasarkan sifat distributif dari "5 paket berisi 2 roti dan 1 susu kotak" yaitu ....</p>
+                        <div class="space-y-1 text-sm">
+                            <label class="block"><input type="radio" name="q4" value="A"> A. (2 × 4.500) + (1 × 3.500) = Rp12.500,00</label>
+                            <label class="block"><input type="radio" name="q4" value="B"> B. 5 × (2 × 4.500) + (1 × 3.500) = Rp48.500,00</label>
+                            <label class="block"><input type="radio" name="q4" value="C"> C. 5 × (2 × 4.500 + 1 × 3.500) = Rp25.000,00</label>
+                            <label class="block"><input type="radio" name="q4" value="D"> D. 5 × [(2 × 4.500) + (1 × 3.500)] = Rp62.500,00</label>
+                        </div>
+                    </div>
+
+                    <!-- Q5 -->
+                    <div class="mb-6 p-4 bg-slate-50 rounded border">
+                        <p class="font-semibold mb-2">5. Seorang siswa membeli 6 roti seharga Rp4.500,00. Ia menghitung total uang yang harus dibayar dengan dua cara, yaitu penjumlahan berulang dan perkalian. Kesimpulan yang tepat adalah ....</p>
+                        <div class="space-y-1 text-sm">
+                            <label class="block"><input type="radio" name="q5" value="A"> A. Penjumlahan berulang menghasilkan Rp27.000,00, sedangkan perkalian menghasilkan Rp24.000,00, sehingga keduanya berbeda.</label>
+                            <label class="block"><input type="radio" name="q5" value="B"> B. Keduanya menghasilkan Rp27.000,00; perkalian merupakan bentuk singkat dari penjumlahan berulang.</label>
+                            <label class="block"><input type="radio" name="q5" value="C"> C. Keduanya menghasilkan Rp27.000,00 karena perkalian sama dengan pembagian berulang.</label>
+                            <label class="block"><input type="radio" name="q5" value="D"> D. Perkalian selalu menghasilkan angka lebih besar dibandingkan penjumlahan berulang.</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BAGIAN II -->
+                <div class="border-t pt-4">
+                    <h3 class="font-bold text-xl text-slate-800 mb-4">Bagian II: Pilihan Ganda Kompleks (Skor 1 per Pernyataan)</h3>
+                    
+                    <!-- Q6 -->
+                    <div class="mb-6 p-4 bg-slate-50 rounded border">
+                        <p class="font-semibold mb-2">6. Bandingkan hasil dari (28 + 35) : 7 dengan 28 + (35 : 7).</p>
+                        <div class="space-y-2 text-sm">
+                            <div><p>a. (28 + 35) : 7 hasilnya adalah 9.</p><label><input type="radio" name="q6_a" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q6_a" value="Salah"> Salah</label></div>
+                            <div><p>b. 28 + (35 : 7) hasilnya adalah 33.</p><label><input type="radio" name="q6_b" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q6_b" value="Salah"> Salah</label></div>
+                            <div><p>c. Kedua cara tersebut menghasilkan nilai yang sama.</p><label><input type="radio" name="q6_c" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q6_c" value="Salah"> Salah</label></div>
+                            <div><p>d. Urutan pengerjaan operasi hitung tidak memengaruhi hasil akhir.</p><label><input type="radio" name="q6_d" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q6_d" value="Salah"> Salah</label></div>
+                        </div>
+                    </div>
+
+                    <!-- Q7 -->
+                    <div class="mb-6 p-4 bg-slate-50 rounded border">
+                        <p class="font-semibold mb-2">7. Perhatikan langkah-langkah menghitung keuntungan Kantin Sehat Sekolah.</p>
+                        <div class="space-y-2 text-sm">
+                            <div><p>a. Total penjualan seluruh barang adalah Rp405.000,00.</p><label><input type="radio" name="q7_a" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q7_a" value="Salah"> Salah</label></div>
+                            <div><p>b. Keuntungan yang diperoleh adalah Rp165.000.</p><label><input type="radio" name="q7_b" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q7_b" value="Salah"> Salah</label></div>
+                            <div><p>c. Total penjualan seluruh barang adalah Rp415.000,00.</p><label><input type="radio" name="q7_c" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q7_c" value="Salah"> Salah</label></div>
+                            <div><p>d. Bagian untuk kas kelas sama besar dengan bagian anggota, yaitu Rp82.500,00.</p><label><input type="radio" name="q7_d" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q7_d" value="Salah"> Salah</label></div>
+                        </div>
+                    </div>
+
+                    <!-- Q8 -->
+                    <div class="mb-6 p-4 bg-slate-50 rounded border">
+                        <p class="font-semibold mb-2">8. Perhatikan: (140.000 + 225.000) + 50.000 = 140.000 + (225.000 + 50.000).</p>
+                        <div class="space-y-2 text-sm">
+                            <div><p>a. Pernyataan tersebut menunjukkan sifat distributif penjumlahan.</p><label><input type="radio" name="q8_a" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q8_a" value="Salah"> Salah</label></div>
+                            <div><p>b. Pernyataan tersebut menunjukkan sifat asosiatif penjumlahan.</p><label><input type="radio" name="q8_b" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q8_b" value="Salah"> Salah</label></div>
+                            <div><p>c. Hasil penjumlahan kedua ruas adalah sama, yaitu Rp415.000,00.</p><label><input type="radio" name="q8_c" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q8_c" value="Salah"> Salah</label></div>
+                            <div><p>d. Jika urutan dua bilangan yang dijumlahkan ditukar, hasilnya akan berubah.</p><label><input type="radio" name="q8_d" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q8_d" value="Salah"> Salah</label></div>
+                        </div>
+                    </div>
+
+                    <!-- Q9 -->
+                    <div class="mb-6 p-4 bg-slate-50 rounded border">
+                        <p class="font-semibold mb-2">9. Harga 1 buah potong adalah Rp2.500,00 (2.500 × 1 = 2.500).</p>
+                        <div class="space-y-2 text-sm">
+                            <div><p>a. Kalimat matematika tersebut menunjukkan sifat identitas perkalian.</p><label><input type="radio" name="q9_a" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q9_a" value="Salah"> Salah</label></div>
+                            <div><p>b. Bilangan dikali 1 hasilnya adalah bilangan itu sendiri.</p><label><input type="radio" name="q9_b" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q9_b" value="Salah"> Salah</label></div>
+                            <div><p>c. Sifat identitas perkalian juga melibatkan bilangan 0 sebagai unsur identitas.</p><label><input type="radio" name="q9_c" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q9_c" value="Salah"> Salah</label></div>
+                            <div><p>d. Sifat ini berbeda dengan sifat identitas penjumlahan yang melibatkan 0.</p><label><input type="radio" name="q9_d" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q9_d" value="Salah"> Salah</label></div>
+                        </div>
+                    </div>
+
+                    <!-- Q10 -->
+                    <div class="mb-6 p-4 bg-slate-50 rounded border">
+                        <p class="font-semibold mb-2">10. Jika dua bilangan cacah dijumlahkan/dikalikan, hasilnya berupa bilangan cacah juga.</p>
+                        <div class="space-y-2 text-sm">
+                            <div><p>a. Pernyataan menunjukkan sifat tertutup (closure) bilangan cacah.</p><label><input type="radio" name="q10_a" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q10_a" value="Salah"> Salah</label></div>
+                            <div><p>b. Sifat tertutup berarti hasil operasi berada dalam himpunan bilangan yang sama.</p><label><input type="radio" name="q10_b" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q10_b" value="Salah"> Salah</label></div>
+                            <div><p>c. Sifat tertutup hanya berlaku untuk operasi pengurangan bilangan cacah.</p><label><input type="radio" name="q10_c" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q10_c" value="Salah"> Salah</label></div>
+                            <div><p>d. Jika dua bilangan cacah dikalikan, hasilnya bisa saja pecahan.</p><label><input type="radio" name="q10_d" value="Benar"> Benar</label> <label class="ml-4"><input type="radio" name="q10_d" value="Salah"> Salah</label></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BAGIAN III -->
+                <div class="border-t pt-4">
+                    <h3 class="font-bold text-xl text-slate-800 mb-4">Bagian III: Uraian Singkat (Skor Maks. 4 per Soal)</h3>
+                    
+                    <div class="mb-6 p-4 bg-slate-50 rounded border">
+                        <p class="font-semibold mb-2">11. Jika total hasil penjualan semua barang dikurangi modal hasilnya akan dibagikan kepada lima anggota kelompok, berapakah yang diterima masing-masing anggota?</p>
+                        <textarea id="q11" rows="3" class="w-full p-2 border rounded text-sm" placeholder="Tuliskan cara pengerjaan dan hasil akhir..."></textarea>
+                    </div>
+
+                    <div class="mb-6 p-4 bg-slate-50 rounded border">
+                        <p class="font-semibold mb-2">12. Jika keuntungan yang diperoleh digunakan untuk membeli 20 roti dan 20 susu kotak, apakah uang mereka cukup?</p>
+                        <textarea id="q12" rows="3" class="w-full p-2 border rounded text-sm" placeholder="Tuliskan alasan dan perhitungannya..."></textarea>
+                    </div>
+
+                    <div class="mb-6 p-4 bg-slate-50 rounded border">
+                        <p class="font-semibold mb-2">13. Seorang siswa membeli 2 roti, 3 susu kotak, dan 4 buah potong dengan uang Rp25.000,00. Berapakah total belanjaan dan bagaimana status uangnya (kurang/pas/sisa)?</p>
+                        <textarea id="q13" rows="3" class="w-full p-2 border rounded text-sm" placeholder="Tuliskan hitungan total dan status uang..."></textarea>
+                    </div>
+
+                    <div class="mb-6 p-4 bg-slate-50 rounded border">
+                        <p class="font-semibold mb-2">14. Salah satu anggota kelompok menggunakan bagian keuntungannya (dari soal 11) untuk membeli 2 roti dan 3 buah potong. Berapakah sisa uangnya?</p>
+                        <textarea id="q14" rows="3" class="w-full p-2 border rounded text-sm" placeholder="Tuliskan hitungan sisa uang..."></textarea>
+                    </div>
+
+                    <div class="mb-6 p-4 bg-slate-50 rounded border">
+                        <p class="font-semibold mb-2">15. Jika sebelum dibagikan, disisihkan Rp30.000 dari keuntungan untuk modal berikutnya, berapakah yang diterima masing-masing dari 5 anggota sekarang?</p>
+                        <textarea id="q15" rows="3" class="w-full p-2 border rounded text-sm" placeholder="Tuliskan hitungan pembagian baru..."></textarea>
+                    </div>
+                </div>
+
+                <button type="button" onclick="kirimJawaban()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-lg shadow-md transition">Kirim Seluruh Jawaban</button>
+            </form>
+        </div>
+
+        <!-- LAYAR HASIL AKHIR -->
+        <div id="hasilSection" class="hidden text-center py-8">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">Kuis Selesai! 🎉</h2>
+            <p class="text-slate-600 mb-6">Jawaban dan rekap nilai Anda telah berhasil dikirim ke guru.</p>
+            
+            <div class="inline-block bg-slate-50 border p-6 rounded-xl shadow-inner mb-6">
+                <p class="text-sm text-slate-500 uppercase font-bold tracking-wider">Nilai Akhir (Poin Maks 45)</p>
+                <p id="totalPoinText" class="text-5xl font-black text-blue-600 my-2">0 / 45</p>
+                <p id="gradeText" class="text-lg font-semibold text-slate-700">Nilai: 0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT LOGIKA KUIS -->
+    <script>
+        // MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwUKD33bdkwtjXMDP6d3ESil5xpTWMa80-TDcwL0Rie1s3RcPCtxWSR9tvBBMyh2yepXg/exec';
+
+        let startTime;
+        let studentData = { name: '', absen: '' };
+
+        // Kunci Jawaban Resmi dari Pedoman Penskoran Post Test
+        const keyPG = { q1: 'D', q2: 'B', q3: 'B', q4: 'D', q5: 'B' };
+        const keyComplex = {
+            q6_a: 'Benar', q6_b: 'Benar', q6_c: 'Salah', q6_d: 'Salah',
+            q7_a: 'Salah', q7_b: 'Benar', q7_c: 'Benar', q7_d: 'Benar',
+            q8_a: 'Salah', q8_b: 'Benar', q8_c: 'Salah', q8_d: 'Salah',
+            q9_a: 'Benar', q9_b: 'Benar', q9_c: 'Salah', q9_d: 'Benar',
+            q10_a: 'Benar', q10_b: 'Benar', q10_c: 'Salah', q10_d: 'Salah'
+        };
+
+        function mulaiKuis() {
+            const nama = document.getElementById('inputNama').value.trim();
+            const absen = document.getElementById('inputAbsen').value.trim();
+
+            if (!nama || !absen) {
+                alert('Silakan isi Nama dan Nomor Presensi terlebih dahulu!');
+                return;
+            }
+
+            studentData.name = nama;
+            studentData.absen = absen;
+            startTime = new Date();
+
+            document.getElementById('identitasSection').classList.add('hidden');
+            document.getElementById('kuisSection').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function kirimJawaban() {
+            if (!confirm('Apakah Anda yakin ingin mengirim semua jawaban?')) return;
+
+            let scores = {};
+            let totalEarnedScore = 0;
+
+            // 1. Hitung Nilai Bagian I (Q1 - Q5)
+            for (let i = 1; i <= 5; i++) {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                const val = selected ? selected.value : '';
+                const score = (val === keyPG[`q${i}`]) ? 1 : 0;
+                scores[`q${i}`] = score;
+                totalEarnedScore += score;
+            }
+
+            // 2. Hitung Nilai Bagian II (Q6 - Q10)
+            const complexQuestions = ['q6', 'q7', 'q8', 'q9', 'q10'];
+            complexQuestions.forEach(q => {
+                let qScore = 0;
+                ['a', 'b', 'c', 'd'].forEach(sub => {
+                    const selected = document.querySelector(`input[name="${q}_${sub}"]:checked`);
+                    if (selected && selected.value === keyComplex[`${q}_${sub}`]) {
+                        qScore += 1;
+                    }
+                });
+                scores[q] = qScore; // Skor per butir (0 - 4)
+                totalEarnedScore += qScore;
+            });
+
+            // 3. Catat Jawaban Uraian Bagian III (Q11 - Q15) & Berikan Skor Default sementara
+            for (let i = 11; i <= 15; i++) {
+                const answerText = document.getElementById(`q${i}`).value.trim();
+                // Memberikan poin default 4 jika dijawab untuk di-review guru di Sheets
+                const autoScore = answerText.length > 5 ? 4 : 0; 
+                scores[`q${i}`] = autoScore;
+                totalEarnedScore += autoScore;
+            }
+
+            // Kalkulasi Waktu & Nilai Akhir
+            const endTime = new Date();
+            const durationSec = Math.round((endTime - startTime) / 1000);
+            const durationFormatted = `${Math.floor(durationSec / 60)} menit${durationSec % 60} detik`;
+            const finalGrade = Math.round((totalEarnedScore / 45) * 100);
+
+            // Buat Payload Pengiriman Data
+            const payload = {
+                timestamp: new Date().toLocaleString('id-ID'),
+                sesi: 'Post-Test',
+                name: studentData.name,
+                absen: studentData.absen,
+                scorePoints: totalEarnedScore,
+                grade: finalGrade,
+                durationFormatted: durationFormatted,
+                ...scores
+            };
+
+            // Kirim Data Ke Google Sheets
+            if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL.startsWith('http')) {
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).catch(err => console.error('Gagal mengirim ke spreadsheet:', err));
+            }
+
+            // Tampilkan Halaman Hasil
+            document.getElementById('kuisSection').classList.add('hidden');
+            document.getElementById('hasilSection').classList.remove('hidden');
+            document.getElementById('totalPoinText').innerText = `${totalEarnedScore} / 45`;
+            document.getElementById('gradeText').innerText = `Nilai Akhir: ${finalGrade}`;
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
