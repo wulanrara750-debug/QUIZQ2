@@ -15,7 +15,7 @@
         .animate-pulse-slow { animation: pulse-slow 3s infinite ease-in-out; }
     </style>
 </head>
-<body class="bg-gradient-to-br from-indigo-50 via-sky-50 to-emerald-50 min-h-screen text-slate-800 font-sans flex flex-col justify-between">
+<body class="bg-gradient-to-br from-indigo-50 via-sky-50 to-emerald-50 min-h-screen text-slate-800 font-sans flex flex-col justify-between" onclick="initAudioContext()">
 
     <!-- HEADER / NAVBAR -->
     <header class="bg-white/80 backdrop-blur-md border-b sticky top-0 z-30 px-4 py-3 shadow-sm">
@@ -27,19 +27,16 @@
             
             <!-- CONTROLS: AUDIO, VOICE OVER, PORTAL GURU & TIMER -->
             <div class="flex items-center space-x-2">
-                <!-- Tombol Voice Over (Tampak di Beranda & Seluruh Layar) -->
                 <button onclick="toggleVoiceOver()" id="btnVo" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-full text-xs font-semibold transition flex items-center space-x-1.5 border">
                     <i class="fas fa-volume-high text-blue-500"></i>
                     <span id="voStatus">Suara/VO: ON</span>
                 </button>
 
-                <!-- Tombol Musik BGM -->
                 <button onclick="toggleAudioBGM()" id="btnBgm" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-full text-xs font-semibold transition flex items-center space-x-1.5 border">
-                    <i class="fas fa-fire text-amber-500"></i>
+                    <i class="fas fa-music text-purple-500"></i>
                     <span id="bgmStatus">Musik: OFF</span>
                 </button>
 
-                <!-- Tombol Portal Guru -->
                 <button onclick="openTeacherPortal()" class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow transition flex items-center space-x-1">
                     <i class="fas fa-key"></i>
                     <span>Portal Guru</span>
@@ -56,14 +53,13 @@
     <main class="max-w-4xl mx-auto w-full p-4 md:p-6 flex-grow">
 
         <!-- SCREEN 1: IDENTITAS PESERTA (BERANDA) -->
-        <div id="screenIntro" class="bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-slate-100 text-center max-w-lg mx-auto animate-pulse-slow my-6">
+        <div id="screenIntro" class="bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-slate-100 text-center max-w-lg mx-auto my-6">
             <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner">
                 <i class="fas fa-store"></i>
             </div>
             <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-2">Post-Test Matematika</h2>
-            <p class="text-slate-600 text-xs md:text-sm mb-4">Kantin Sehat Sekolah • Kelas V SD<br>Evaluasi Konsep &amp; Sifat Operasi Hitung Bilangan Cacah</p>
+            <p class="text-slate-600 text-xs md:text-sm mb-4">Kantin Sehat Sekolah • Kelas V SD<br>Evaluasi Konsep & Sifat Operasi Hitung Bilangan Cacah</p>
             
-            <!-- Status Kontrol VO di Beranda -->
             <div class="mb-5 inline-flex items-center space-x-2 bg-blue-50 border border-blue-200 text-blue-800 px-3 py-1.5 rounded-xl text-xs font-medium">
                 <i class="fas fa-bullhorn text-blue-600"></i>
                 <span>Fitur Pengisi Suara (Voice Over) Aktif</span>
@@ -92,7 +88,7 @@
             <div class="bg-white p-4 rounded-xl shadow-sm border flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div class="flex-grow">
                     <div class="flex justify-between text-xs font-bold text-slate-500 mb-1">
-                        <span id="questionCategory">Bagian I: Pilihan Ganda</span>
+                        <span id="questionCategory">Bagian A: Pilihan Ganda</span>
                         <span id="progressText">Soal 1 dari 15</span>
                     </div>
                     <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
@@ -108,7 +104,6 @@
             <!-- CARD SOAL -->
             <div class="bg-white rounded-2xl shadow-lg p-6 border border-slate-100 relative">
                 
-                <!-- HEADER SOAL & VOICE OVER BUTTON -->
                 <div class="flex justify-between items-center mb-4 pb-3 border-b">
                     <span id="questionBadge" class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">Soal #1</span>
                     <button onclick="readQuestionVoice()" class="text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 py-1 rounded-full text-xs font-semibold transition flex items-center space-x-1">
@@ -118,14 +113,10 @@
                 </div>
 
                 <!-- TEKS SOAL -->
-                <div id="questionText" class="text-slate-800 font-semibold text-base md:text-lg mb-6 leading-relaxed whitespace-pre-line">
-                    <!-- Dynamic Text -->
-                </div>
+                <div id="questionText" class="text-slate-800 font-semibold text-base md:text-lg mb-6 leading-relaxed whitespace-pre-line"></div>
 
                 <!-- CONTAINER JAWABAN DINAMIS -->
-                <div id="answerOptionsContainer" class="space-y-3">
-                    <!-- Dynamic Options -->
-                </div>
+                <div id="answerOptionsContainer" class="space-y-3"></div>
 
                 <!-- BOTTOM NAVIGATION -->
                 <div class="flex justify-between items-center mt-8 pt-4 border-t">
@@ -141,45 +132,56 @@
                         <span>Berikutnya</span> <i class="fas fa-chevron-right"></i>
                     </button>
                     <button id="btnFinish" onclick="submitFinalQuiz()" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2 rounded-lg text-sm shadow transition flex items-center space-x-1">
-                        <span>Selesai &amp; Kirim</span> <i class="fas fa-paper-plane"></i>
+                        <span>Selesai & Kirim</span> <i class="fas fa-paper-plane"></i>
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- SCREEN 3: RINGKASAN HASIL (RESULT CARD) -->
-        <div id="screenResult" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 text-center border max-w-xl mx-auto my-6">
+        <div id="screenResult" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 text-center border max-w-2xl mx-auto my-6">
             <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-4xl shadow-inner">
                 <i class="fas fa-trophy"></i>
             </div>
             <h2 class="text-2xl md:text-3xl font-black text-slate-800 mb-1">Post-Test Selesai!</h2>
             <p id="studentResultSummary" class="text-slate-500 text-xs md:text-sm mb-6">Rekapitulasi Hasil Belajar Siswa</p>
 
-            <div class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white p-6 rounded-2xl shadow-lg mb-6">
-                <p class="text-xs uppercase font-bold tracking-widest text-indigo-300">Nilai Akhir (Skala 100)</p>
-                <div id="finalGradeDisplay" class="text-6xl font-black my-2 text-yellow-400">0</div>
-                <p id="finalPointsDisplay" class="text-sm font-medium text-slate-300">Skor Diperoleh: 0 / 45 Poin</p>
-                <p id="finalTimeDisplay" class="text-xs text-indigo-200 mt-2"><i class="far fa-clock mr-1"></i>Durasi: 00:00</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="bg-indigo-50 border border-indigo-200 p-5 rounded-2xl text-center">
+                    <p class="text-xs uppercase font-bold tracking-wider text-indigo-500">Pemahaman Konsep</p>
+                    <div id="conceptGradeDisplay" class="text-5xl font-black my-2 text-indigo-700">0</div>
+                    <p id="conceptPointsDisplay" class="text-xs font-bold text-slate-600">Skor: 0 / 15 Poin</p>
+                </div>
+
+                <div class="bg-emerald-50 border border-emerald-200 p-5 rounded-2xl text-center">
+                    <p class="text-xs uppercase font-bold tracking-wider text-emerald-600">Pemecahan Masalah</p>
+                    <div id="problemGradeDisplay" class="text-5xl font-black my-2 text-emerald-700">0</div>
+                    <p id="problemPointsDisplay" class="text-xs font-bold text-slate-600">Skor: 0 / 20 Poin</p>
+                </div>
+            </div>
+
+            <div id="finalTimeDisplay" class="text-xs font-bold text-slate-600 bg-slate-100 py-2.5 rounded-xl border mb-6">
+                <i class="far fa-clock mr-1 text-amber-500"></i>Durasi Pengerjaan: 00:00
             </div>
 
             <div class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-medium mb-6">
                 <i class="fas fa-check-circle mr-1 text-emerald-600"></i>
-                Data rekap item soal (Q1 - Q15) telah tersimpan di browser dan dikirim ke Google Sheets guru.
+                Data hasil pengerjaan dan analisis langkah Polya telah tersimpan lokal & terkirim ke rekap guru!
             </div>
 
             <button onclick="location.reload()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-2.5 px-6 rounded-xl text-sm transition shadow">
-                <i class="fas fa-redo mr-2"></i>Tutup &amp; Ulangi Halaman
+                <i class="fas fa-redo mr-2"></i>Selesai / Kerjakan Ulang
             </button>
         </div>
 
-        <!-- SCREEN 4: PORTAL GURU (REKAP DATA SISWA) -->
+        <!-- SCREEN 4: PORTAL GURU -->
         <div id="screenTeacher" class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-slate-100 my-6">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-4 mb-6 gap-3">
                 <div>
                     <h2 class="text-xl md:text-2xl font-black text-slate-800 flex items-center">
-                        <i class="fas fa-user-shield text-amber-500 mr-2"></i>Portal Guru - Rekap Data Siswa
+                        <i class="fas fa-user-shield text-amber-500 mr-2"></i>Portal Guru - Rekap Data Post-Test
                     </h2>
-                    <p class="text-xs text-slate-500 mt-1">Hasil pengerjaan Post-Test Matematika yang tersimpan lokal di peranti ini</p>
+                    <p class="text-xs text-slate-500 mt-1">Laporan terpisah Nilai Konsep & Pemecahan Masalah siswa</p>
                 </div>
                 <div class="flex items-center space-x-2">
                     <button onclick="downloadExcelRecap()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-2 rounded-lg shadow transition flex items-center space-x-1">
@@ -198,22 +200,20 @@
                     <thead class="bg-slate-100 text-slate-700 uppercase font-bold border-b">
                         <tr>
                             <th class="p-3">No</th>
+                            <th class="p-3">Waktu</th>
                             <th class="p-3">Nama Siswa</th>
                             <th class="p-3">Kelas / Absen</th>
-                            <th class="p-3">Waktu Pengerjaan</th>
-                            <th class="p-3">Skor Mentah (45)</th>
-                            <th class="p-3">Nilai Akhir</th>
-                            <th class="p-3">Tanggal Selesai</th>
+                            <th class="p-3">Durasi</th>
+                            <th class="p-3">Nilai Konsep</th>
+                            <th class="p-3">Nilai Masalah</th>
                         </tr>
                     </thead>
-                    <tbody id="teacherTableBody" class="divide-y bg-white">
-                        <!-- Dynamic Rows -->
-                    </tbody>
+                    <tbody id="teacherTableBody" class="divide-y bg-white"></tbody>
                 </table>
             </div>
 
             <button onclick="closeTeacherPortal()" class="bg-slate-700 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition">
-                <i class="fas fa-arrow-left mr-1.5"></i>Kembali ke Beranda Kuis
+                <i class="fas fa-arrow-left mr-1.5"></i>Kembali ke Beranda
             </button>
         </div>
 
@@ -224,7 +224,7 @@
         Media Pembelajaran Matematika • Kantin Sehat Sekolah SD
     </footer>
 
-    <!-- MODAL 1: WACANA POP-UP -->
+    <!-- MODAL WACANA POP-UP -->
     <div id="modalWacana" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b pb-3 mb-4">
@@ -246,56 +246,48 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y bg-slate-50">
-                            <tr><td class="p-2.5 font-bold">Roti</td><td class="p-2.5">Rp4.500,00</td><td class="p-2.5 font-semibold text-blue-600">50 buah</td></tr>
-                            <tr><td class="p-2.5 font-bold">Susu kotak</td><td class="p-2.5">Rp3.500,00</td><td class="p-2.5 font-semibold text-blue-600">40 buah</td></tr>
-                            <tr><td class="p-2.5 font-bold">Buah potong</td><td class="p-2.5">Rp2.500,00</td><td class="p-2.5 font-semibold text-blue-600">20 buah</td></tr>
+                            <tr><td class="p-2.5 font-bold">Roti</td><td class="p-2.5">Rp4.000,00</td><td class="p-2.5 font-semibold text-blue-600">9 buah</td></tr>
+                            <tr><td class="p-2.5 font-bold">Susu kotak</td><td class="p-2.5">Rp5.000,00</td><td class="p-2.5 font-semibold text-blue-600">8 buah</td></tr>
+                            <tr><td class="p-2.5 font-bold">Buah potong</td><td class="p-2.5">Rp2.000,00</td><td class="p-2.5 font-semibold text-blue-600">8 porsi</td></tr>
                         </tbody>
                     </table>
                 </div>
                 <p class="text-xs bg-amber-50 text-amber-900 p-3 rounded-lg border border-amber-200">
-                    <strong>Catatan Modal:</strong> Modal awal kegiatan ini adalah <strong>Rp250.000,00</strong>. Keuntungan digunakan untuk menambah kas kelas atau dibagikan kepada anggota kelompok.
+                    <strong>Catatan Modal:</strong> Modal awal adalah <strong>Rp32.000,00</strong>. Keuntungan akan digunakan sesuai kesepakatan kelompok.
                 </p>
             </div>
             <button onclick="closeWacanaModal()" class="mt-5 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-sm transition">Tutup Wacana</button>
         </div>
     </div>
 
-    <!-- MODAL 2: NAVIGASI PALET NOMOR SOAL -->
+    <!-- MODAL NAVIGASI PALET NOMOR SOAL -->
     <div id="modalPalette" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl">
             <div class="flex justify-between items-center border-b pb-3 mb-4">
                 <h3 class="font-bold text-slate-800 text-base"><i class="fas fa-th mr-2 text-blue-600"></i>Navigasi Nomor Soal</h3>
                 <button onclick="togglePaletteModal()" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
             </div>
-            <div id="paletteGrid" class="grid grid-cols-5 gap-2.5 mb-5">
-                <!-- Grid buttons rendered via JS -->
-            </div>
+            <div id="paletteGrid" class="grid grid-cols-5 gap-2.5 mb-5"></div>
             <button onclick="togglePaletteModal()" class="w-full bg-slate-100 text-slate-700 font-bold py-2 rounded-xl text-xs">Tutup</button>
         </div>
     </div>
 
-    <!-- SCRIPT UTAMA & LOGIKA KUIS -->
     <script>
-        // ==========================================
-        // 1. URL GOOGLE APPS SCRIPT & PASSWORD GURU
-        // ==========================================
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwUKD33bdkwtjXMDP6d3ESil5xpTWMa80-TDcwL0Rie1s3RcPCtxWSR9tvBBMyh2yepXg/exec';
         const TEACHER_PASS = 'GuruCerdas#2026!Math';
 
-        // ==========================================
-        // 2. DATASET KUIS (Q1 - Q15)
-        // ==========================================
+        // DATASET KUIS POST-TEST REVISI
         const quizData = [
             { 
                 id: 1, 
                 type: 'mc', 
-                category: 'Bagian I: Pilihan Ganda', 
-                question: 'Total penjualan susu kotak pada kegiatan "Kantin Sehat Sekolah" dihitung dengan 40 × Rp3.500,00 = Rp140.000,00. Penafsiran yang tepat terhadap hasil perhitungan tersebut adalah ….', 
+                category: 'Bagian A: Pilihan Ganda (1 Poin)', 
+                question: 'Total penjualan susu kotak pada kegiatan "Kantin Sehat Sekolah" dihitung dengan 8 × Rp5.000,00 = Rp40.000,00. Penafsiran yang tepat terhadap hasil perhitungan tersebut adalah …. ', 
                 options: [
-                    'A. Rp140.000,00 adalah harga satu susu kotak dan 40 adalah banyaknya susu kotak yang tersisa.', 
-                    'B. Rp140.000,00 adalah keuntungan penjualan susu kotak setelah dikurangi modal.', 
-                    'C. Rp140.000,00 adalah harga 3.500 susu kotak dengan harga Rp40,00 per buah.', 
-                    'D. Rp140.000,00 adalah uang yang diperoleh dari penjualan 40 susu kotak dengan harga Rp3.500,00 per buah.'
+                    'A. Rp40.000,00 adalah harga satu susu kotak dan 8 adalah banyak susu kotak yang masih tersisa.', 
+                    'B. Rp40.000,00 adalah keuntungan penjualan susu kotak setelah dikurangi dengan modal awal.', 
+                    'C. Rp40.000,00 adalah harga 5.000 susu kotak dengan harga Rp8,00 untuk setiap susu kotak.', 
+                    'D. Rp40.000,00 adalah uang yang diperoleh dari penjualan 8 susu kotak dengan harga Rp5.000,00 per buah.'
                 ], 
                 answer: 'D', 
                 points: 1 
@@ -303,13 +295,13 @@
             { 
                 id: 2, 
                 type: 'mc', 
-                category: 'Bagian I: Pilihan Ganda', 
+                category: 'Bagian A: Pilihan Ganda (1 Poin)', 
                 question: 'Manakah yang merupakan contoh penerapan operasi pembagian pada kegiatan "Kantin Sehat Sekolah"?', 
                 options: [
-                    'A. Menghitung banyak roti yang terjual dari hasil penjualan Rp225.000,00 dan harga satuan Rp4.500,00, yaitu 225.000 : 4.500.', 
-                    'B. Menghitung hasil penjualan susu kotak dengan 40 × Rp3.500,00.', 
-                    'C. Menghitung hasil penjualan roti dan susu kotak dengan Rp225.000,00 + Rp140.000,00.', 
-                    'D. Menghitung keuntungan dengan Rp415.000,00 – Rp250.000,00.'
+                    'A. Menghitung banyak roti yang terjual dari hasil penjualan Rp36.000,00 dan harga Rp4.000,00, yaitu 36.000 : 4.000.', 
+                    'B. Menghitung hasil penjualan susu kotak dari 8 susu kotak dengan harga Rp5.000,00, yaitu 8 × 5.000.', 
+                    'C. Menghitung hasil penjualan roti dan susu kotak dari Rp36.000,00 dan Rp40.000,00, yaitu 36.000 + 40.000.', 
+                    'D. Menghitung keuntungan dari hasil penjualan Rp92.000,00 dan modal Rp32.000,00, yaitu 92.000 – 32.000.'
                 ], 
                 answer: 'A', 
                 points: 1 
@@ -317,165 +309,142 @@
             { 
                 id: 3, 
                 type: 'mc', 
-                category: 'Bagian I: Pilihan Ganda', 
-                question: 'Tentukan urutan jenis operasi hitung yang digunakan untuk menyelesaikan pernyataan (a) sampai (d) berikut secara berturut-turut!\na. Menentukan hasil penjualan 20 buah potong yang harganya Rp2.500,00 per buah.\nb. Menentukan keuntungan dari hasil penjualan Rp415.000,00 dengan modal Rp250.000,00.\nc. Menentukan hasil penjualan seluruh barang dari hasil penjualan roti, susu kotak, dan buah potong.\nd. Menentukan bagian setiap anggota jika keuntungan Rp165.000,00 dibagi rata kepada 5 anggota.', 
+                category: 'Bagian A: Pilihan Ganda (1 Poin)', 
+                question: 'Tentukan urutan jenis operasi hitung yang digunakan untuk menyelesaikan pernyataan (a) sampai (d) berikut secara berturut-turut!\na. Menentukan hasil penjualan seluruh barang dari hasil penjualan roti, susu kotak, dan buah potong.\nb. Menentukan hasil penjualan 8 porsi buah potong yang harganya Rp2.000,00 per porsi.\nc. Menentukan bagian setiap anggota jika keuntungan Rp60.000,00 dibagi rata kepada 5 anggota.\nd. Menentukan keuntungan dari hasil penjualan Rp92.000,00 dengan modal Rp32.000,00.', 
                 options: [
-                    'A. Penjumlahan, Pengurangan, Perkalian, Pembagian', 
-                    'B. Perkalian, Pembagian, Penjumlahan, Pengurangan', 
-                    'C. Perkalian, Pengurangan, Penjumlahan, Pembagian', 
-                    'D. Pembagian, Penjumlahan, Pengurangan, Perkalian'
-                ], 
-                answer: 'C', 
-                points: 1 
-            },
-            { 
-                id: 4, 
-                type: 'mc', 
-                category: 'Bagian I: Pilihan Ganda', 
-                question: 'Seorang pembeli membeli 4 roti dan 3 susu kotak di "Kantin Sehat Sekolah" dengan membayar uang Rp50.000,00. Kalimat matematika yang tepat untuk menentukan uang kembalian pembeli tersebut yaitu ….', 
-                options: [
-                    'A. 50.000 – (4 × 4.500) + (3 × 3.500) = Rp42.500,00', 
-                    'B. 50.000 – (4 + 3) × 4.500 = Rp18.500,00', 
-                    'C. 50.000 + [(4 × 4.500) + (3 × 3.500)] = Rp78.500,00', 
-                    'D. 50.000 – [(4 × 4.500) + (3 × 3.500)] = Rp21.500,00'
-                ], 
-                answer: 'D', 
-                points: 1 
-            },
-            { 
-                id: 5, 
-                type: 'mc', 
-                category: 'Bagian I: Pilihan Ganda', 
-                question: 'Seorang siswa membeli 6 roti seharga Rp4.500,00. Ia menghitung total uang yang harus dibayar dengan dua cara, yaitu penjumlahan berulang dan perkalian. Kesimpulan yang tepat adalah ....', 
-                options: [
-                    'A. Penjumlahan berulang menghasilkan Rp27.000,00, sedangkan perkalian menghasilkan Rp24.000,00, sehingga keduanya berbeda.', 
-                    'B. Keduanya menghasilkan Rp27.000,00; perkalian merupakan bentuk singkat dari penjumlahan berulang.', 
-                    'C. Keduanya menghasilkan Rp27.000,00 karena perkalian sama dengan pembagian berulang.', 
-                    'D. Perkalian selalu menghasilkan angka lebih besar dibandingkan penjumlahan berulang.'
+                    'A. Perkalian, Penjumlahan, Pembagian, Pengurangan', 
+                    'B. Penjumlahan, Perkalian, Pembagian, Pengurangan', 
+                    'C. Penjumlahan, Perkalian, Pengurangan, Pembagian', 
+                    'D. Pengurangan, Penjumlahan, Perkalian, Pembagian'
                 ], 
                 answer: 'B', 
                 points: 1 
             },
             { 
+                id: 4, 
+                type: 'mc', 
+                category: 'Bagian A: Pilihan Ganda (1 Poin)', 
+                question: 'Seorang pembeli membeli 3 roti dan 4 susu kotak di "Kantin Sehat Sekolah" dengan membayar uang Rp50.000,00. Kalimat matematika yang tepat untuk menentukan uang kembalian pembeli tersebut yaitu …. ', 
+                options: [
+                    'A. 50.000 – (3 × 4.000) + (4 × 5.000) = Rp58.000,00', 
+                    'B. 50.000 – (3 + 4) × 4.000 = Rp22.000,00', 
+                    'C. 50.000 – [(3 × 4.000) + (4 × 5.000)] = Rp18.000,00', 
+                    'D. 50.000 + [(3 × 4.000) + (4 × 5.000)] = Rp82.000,00'
+                ], 
+                answer: 'C', 
+                points: 1 
+            },
+            { 
+                id: 5, 
+                type: 'mc', 
+                category: 'Bagian A: Pilihan Ganda (1 Poin)', 
+                question: 'Seorang siswa membeli 6 roti seharga Rp4.000,00 per buah. Ia menghitung total uang yang harus dibayar dengan dua cara, yaitu penjumlahan berulang dan perkalian. Kesimpulan yang tepat dari kedua cara tersebut adalah …. ', 
+                options: [
+                    'A. Keduanya menghasilkan Rp24.000,00 karena perkalian merupakan bentuk singkat penjumlahan berulang.', 
+                    'B. Penjumlahan berulang menghasilkan Rp24.000,00, sedangkan perkalian menghasilkan Rp20.000,00, sehingga hasilnya berbeda.', 
+                    'C. Keduanya menghasilkan Rp24.000,00 karena perkalian sama artinya dengan pembagian berulang.', 
+                    'D. Perkalian selalu menghasilkan angka yang lebih besar dibandingkan penjumlahan berulang.'
+                ], 
+                answer: 'A', 
+                points: 1 
+            },
+            { 
                 id: 6, 
                 type: 'complex', 
-                category: 'Bagian II: PG Kompleks', 
+                category: 'Bagian B: PG Kompleks (Skor Max 2)', 
                 question: 'Bandingkan hasil dari (28 + 35) : 7 dengan 28 + (35 : 7).', 
                 statements: [
-                    { text: 'a. (28 + 35) : 7 hasilnya adalah 9.', answer: 'Benar' }, 
-                    { text: 'b. 28 + (35 : 7) hasilnya adalah 33.', answer: 'Benar' }, 
-                    { text: 'c. Kedua cara tersebut menghasilkan nilai yang sama.', answer: 'Salah' }, 
-                    { text: 'd. Urutan pengerjaan operasi hitung (tanda kurung dan pembagian) tidak memengaruhi hasil akhir.', answer: 'Salah' }
+                    { id: '6a', text: 'a. (28 + 35) : 7 hasilnya adalah 9.', isCorrect: true }, 
+                    { id: '6b', text: 'b. 28 + (35 : 7) hasilnya adalah 33.', isCorrect: true }, 
+                    { id: '6c', text: 'c. Kedua cara tersebut menghasilkan nilai yang sama.', isCorrect: false }, 
+                    { id: '6d', text: 'd. Urutan pengerjaan operasi hitung (tanda kurung dan pembagian) tidak memengaruhi hasil akhir.', isCorrect: false }
                 ] 
             },
             { 
                 id: 7, 
                 type: 'complex', 
-                category: 'Bagian II: PG Kompleks', 
-                question: 'Perhatikan langkah-langkah menghitung keuntungan Kantin Sehat Sekolah, di mana setengahnya untuk menambah kas kelas atau dibagikan kepada anggota kelompok.', 
+                category: 'Bagian B: PG Kompleks (Skor Max 2)', 
+                question: 'Perhatikan langkah-langkah menghitung keuntungan Kantin Sehat Sekolah, di mana setengah keuntungan untuk menambah kas kelas dan setengah lainnya dibagikan kepada anggota kelompok.', 
                 statements: [
-                    { text: 'a. Total penjualan seluruh barang adalah Rp405.000,00.', answer: 'Salah' }, 
-                    { text: 'b. Keuntungan yang diperoleh adalah Rp165.000.', answer: 'Benar' }, 
-                    { text: 'c. Total penjualan seluruh barang adalah Rp415.000,00.', answer: 'Benar' }, 
-                    { text: 'd. Bagian untuk kas kelas sama besar dengan bagian untuk dibagikan kepada anggota kelompok, yaitu Rp82.500,00.', answer: 'Benar' }
+                    { id: '7a', text: 'a. Total penjualan seluruh barang adalah Rp90.000,00.', isCorrect: false }, 
+                    { id: '7b', text: 'b. Keuntungan yang diperoleh adalah Rp60.000,00.', isCorrect: true }, 
+                    { id: '7c', text: 'c. Bagian untuk kas kelas adalah Rp30.000,00.', isCorrect: true }, 
+                    { id: '7d', text: 'd. Bagian yang dibagikan kepada anggota kelompok sama besar dengan bagian kas kelas, yaitu Rp25.000,00.', isCorrect: false }
                 ] 
             },
             { 
                 id: 8, 
                 type: 'complex', 
-                category: 'Bagian II: PG Kompleks', 
-                question: 'Sebelum dijual, kelompok memiliki persediaan 70 susu kotak. Setelah kegiatan berlangsung, 40 susu kotak terjual. Perhatikan pernyataan berikut!', 
+                category: 'Bagian B: PG Kompleks (Skor Max 2)', 
+                question: 'Sebelum dijual, kelompok memiliki persediaan 40 susu kotak. Setelah kegiatan berlangsung, 8 susu kotak terjual. Perhatikan pernyataan berikut!', 
                 statements: [
-                    { text: 'a. Banyak susu kotak yang tersisa dapat dicari dengan operasi penjumlahan, yaitu 70 + 40.', answer: 'Salah' }, 
-                    { text: 'b. Banyak susu kotak yang tersisa dapat dicari dengan operasi pengurangan, yaitu 70 – 40.', answer: 'Benar' }, 
-                    { text: 'c. Banyak susu kotak yang tersisa adalah 30 buah.', answer: 'Benar' }, 
-                    { text: 'd. Jika dari sisa susu kotak tersebut terjual lagi 10 buah, maka susu kotak yang tersisa menjadi 40 buah.', answer: 'Salah' }
+                    { id: '8a', text: 'a. Banyak susu kotak yang tersisa dapat dicari dengan operasi penjumlahan, yaitu 40 + 8.', isCorrect: false }, 
+                    { id: '8b', text: 'b. Banyak susu kotak yang tersisa dapat dicari dengan operasi pengurangan, yaitu 40 – 8.', isCorrect: true }, 
+                    { id: '8c', text: 'c. Banyak susu kotak yang tersisa adalah 32 buah.', isCorrect: true }, 
+                    { id: '8d', text: 'd. Jika dari sisa susu kotak tersebut terjual lagi 12 buah, maka susu kotak yang tersisa menjadi 30 buah.', isCorrect: false }
                 ] 
             },
             { 
                 id: 9, 
                 type: 'complex', 
-                category: 'Bagian II: PG Kompleks', 
-                question: 'Penjualan roti pada tiga hari Jumat berturut-turut di "Kantin Sehat Sekolah" adalah 15 buah pada minggu pertama, 22 buah pada minggu kedua, dan 13 buah pada minggu ketiga.', 
+                category: 'Bagian B: PG Kompleks (Skor Max 2)', 
+                question: 'Penjualan roti pada tiga hari Jumat berturut-turut di "Kantin Sehat Sekolah" adalah 2 buah pada minggu pertama, 4 buah pada minggu kedua, dan 3 buah pada minggu ketiga.', 
                 statements: [
-                    { text: 'a. Banyak roti yang terjual selama tiga minggu dapat dicari dengan operasi penjumlahan, yaitu 15 + 22 + 13.', answer: 'Benar' }, 
-                    { text: 'b. Total roti yang terjual selama tiga minggu adalah 50 buah.', answer: 'Benar' }, 
-                    { text: 'c. Minggu ketiga merupakan minggu dengan penjualan roti paling banyak.', answer: 'Salah' }, 
-                    { text: 'd. Penjualan roti pada minggu kedua lebih banyak 7 buah daripada minggu pertama.', answer: 'Benar' }
+                    { id: '9a', text: 'a. Banyak roti yang terjual selama tiga minggu dapat dicari dengan operasi penjumlahan, yaitu 2 + 4 + 3.', isCorrect: true }, 
+                    { id: '9b', text: 'b. Total roti yang terjual selama tiga minggu adalah 10 buah.', isCorrect: false }, 
+                    { id: '9c', text: 'c. Minggu kedua merupakan minggu dengan penjualan roti paling banyak.', isCorrect: true }, 
+                    { id: '9d', text: 'd. Penjualan roti pada minggu ketiga lebih banyak 2 buah daripada minggu pertama.', isCorrect: false }
                 ] 
             },
             { 
                 id: 10, 
                 type: 'complex', 
-                category: 'Bagian II: PG Kompleks', 
-                question: 'Kelompok siswa akan mengemas 40 susu kotak ke dalam beberapa dus. Setiap dus diisi 8 susu kotak. Perhatikan pernyataan berikut!', 
+                category: 'Bagian B: PG Kompleks (Skor Max 2)', 
+                question: 'Persediaan 48 roti akan dikemas ke dalam beberapa dus. Setiap dus diisi 8 roti. Perhatikan pernyataan berikut!', 
                 statements: [
-                    { text: 'a. Banyak dus yang dibutuhkan dapat dicari dengan operasi pembagian, yaitu 40 : 8 = 5 dus.', answer: 'Benar' }, 
-                    { text: 'b. Hasil pembagian tersebut dapat diperiksa dengan perkalian, yaitu 5 × 8 = 40.', answer: 'Benar' }, 
-                    { text: 'c. Banyak dus yang dibutuhkan dapat dicari dengan operasi pengurangan, yaitu 40 – 8 = 32 dus.', answer: 'Salah' }, 
-                    { text: 'd. Jika setiap dus diisi 10 susu kotak, banyak dus yang dibutuhkan tetap 5 dus.', answer: 'Salah' }
+                    { id: '10a', text: 'a. Banyak dus yang dibutuhkan dapat dicari dengan operasi pembagian, yaitu 48 : 8 = 6 dus.', isCorrect: true }, 
+                    { id: '10b', text: 'b. Hasil pembagian tersebut dapat diperiksa dengan perkalian, yaitu 6 × 8 = 48.', isCorrect: true }, 
+                    { id: '10c', text: 'c. Banyak dus yang dibutuhkan dapat dicari dengan operasi pengurangan, yaitu 48 – 8 = 40 dus.', isCorrect: false }, 
+                    { id: '10d', text: 'd. Jika setiap dus diisi 12 roti, banyak dus yang dibutuhkan tetap 6 dus.', isCorrect: false }
                 ] 
             },
             { 
                 id: 11, 
-                type: 'essay', 
-                category: 'Bagian III: Uraian Singkat', 
-                question: 'Jika total hasil penjualan semua barang dikurangi modal hasilnya akan dibagikan kepada lima anggota kelompok, berapakah yang diterima masing-masing anggota?', 
-                maxScore: 4,
-                rubric: {
-                    jawab: ['33.000', '33000', '165.000', '165000'],
-                    jadi: ['33.000', '33000']
-                }
+                type: 'uraian_polya', 
+                category: 'Bagian C: Uraian (4 Langkah Polya)', 
+                question: 'Hasil penjualan semua barang dikurangi modal menjadi keuntungan, lalu keuntungan tersebut dibagi rata kepada lima anggota kelompok. Berapakah yang diterima masing-masing anggota?', 
+                points: 4
             },
             { 
                 id: 12, 
-                type: 'essay', 
-                category: 'Bagian III: Uraian Singkat', 
-                question: 'Jika keuntungan yang diperoleh digunakan untuk membeli 20 roti dan 20 susu kotak, apakah uang mereka cukup?', 
-                maxScore: 4,
-                rubric: {
-                    jawab: ['160.000', '160000', '5.000', '5000', 'cukup'],
-                    jadi: ['cukup', '5.000', '5000']
-                }
+                type: 'uraian_polya', 
+                category: 'Bagian C: Uraian (4 Langkah Polya)', 
+                question: 'Keuntungan tersebut akan digunakan untuk membeli 7 roti dan 7 susu kotak. Apakah uang keuntungan cukup untuk membeli semuanya?', 
+                points: 4
             },
             { 
                 id: 13, 
-                type: 'essay', 
-                category: 'Bagian III: Uraian Singkat', 
-                question: 'Seorang siswa membeli 2 roti, 3 susu kotak, dan 4 buah potong. Ia membawa uang sebesar Rp25.000,00. Berapakah total belanja siswa tersebut? Bagaimana hasilnya, apakah uang tersebut kurang, pas, atau sisa?', 
-                maxScore: 4,
-                rubric: {
-                    jawab: ['29.500', '29500', '4.500', '4500', 'kurang'],
-                    jadi: ['29.500', '29500', 'kurang']
-                }
+                type: 'uraian_polya', 
+                category: 'Bagian C: Uraian (4 Langkah Polya)', 
+                question: 'Seorang siswa membeli 2 roti, 3 susu kotak, dan 1 porsi buah potong. Ia membawa uang sebesar Rp30.000,00. Berapakah total belanja siswa tersebut? Bagaimana hasilnya, apakah uang tersebut kurang, pas, atau sisa?', 
+                points: 4
             },
             { 
                 id: 14, 
-                type: 'essay', 
-                category: 'Bagian III: Uraian Singkat', 
-                question: 'Salah satu anggota kelompok yang menerima bagian keuntungan (lihat soal nomor 11) menggunakan bagiannya untuk membeli 2 roti dan 3 buah potong. Berapakah sisa uang anggota tersebut setelah berbelanja?', 
-                maxScore: 4,
-                rubric: {
-                    jawab: ['16.500', '16500'],
-                    jadi: ['16.500', '16500']
-                }
+                type: 'uraian_polya', 
+                category: 'Bagian C: Uraian (4 Langkah Polya)', 
+                question: 'Salah satu anggota kelompok yang menerima bagian keuntungan (lihat soal nomor 11) menggunakan bagiannya untuk membeli 2 porsi buah potong dan 1 susu kotak. Berapakah sisa uang anggota tersebut setelah berbelanja?', 
+                points: 4
             },
             { 
                 id: 15, 
-                type: 'essay', 
-                category: 'Bagian III: Uraian Singkat', 
-                question: 'Jika sebelum dibagikan kepada lima anggota kelompok, kelompok tersebut sepakat menyisihkan Rp30.000 dari keuntungan untuk menambah modal periode berikutnya, berapakah yang diterima masing-masing anggota sekarang?', 
-                maxScore: 4,
-                rubric: {
-                    jawab: ['135.000', '135000', '27.000', '27000'],
-                    jadi: ['27.000', '27000']
-                }
+                type: 'uraian_polya', 
+                category: 'Bagian C: Uraian (4 Langkah Polya)', 
+                question: 'Jika sebelum dibagikan kepada lima anggota kelompok, kelompok tersebut sepakat menyisihkan Rp15.000,00 dari keuntungan untuk menambah modal periode berikutnya, berapakah yang diterima masing-masing anggota sekarang?', 
+                points: 4
             }
         ];
 
-        // ==========================================
-        // 3. STATE & AUDIO SYSTEM
-        // ==========================================
         let currentIdx = 0;
         let userAnswers = {};
         let studentProfile = { name: '', absen: '' };
@@ -485,23 +454,10 @@
         let bgmInterval = null;
         let isBgmPlaying = false;
         let isVoEnabled = true;
-        let bgmStep = 0;
-
-        const energeticSequence = [
-            { freq: 261.63, type: 'square' },
-            { freq: 329.63, type: 'triangle' },
-            { freq: 392.00, type: 'square' },
-            { freq: 523.25, type: 'triangle' },
-            { freq: 440.00, type: 'square' },
-            { freq: 523.25, type: 'triangle' },
-            { freq: 659.25, type: 'square' },
-            { freq: 587.33, type: 'triangle' }
-        ];
 
         function initAudioContext() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
         }
 
         function playSoundTone(freq, duration, type = 'sine', volume = 0.08) {
@@ -527,43 +483,37 @@
             setTimeout(() => playSoundTone(783.99, 0.25, 'sine', 0.2), 200);
         }
 
-        function toggleAudioBGM() {
+        function toggleAudioBGM(e) {
+            if (e) e.stopPropagation();
             initAudioContext();
             isBgmPlaying = !isBgmPlaying;
             const btnText = document.getElementById('bgmStatus');
             
             if (isBgmPlaying) {
-                btnText.innerText = "Musik: ON 🔥";
-                bgmStep = 0;
+                btnText.innerText = "Musik: ON";
+                let bgmStep = 0;
+                const notes = [523.25, 659.25, 783.99, 1046.50];
                 bgmInterval = setInterval(() => {
-                    const currentNote = energeticSequence[bgmStep % energeticSequence.length];
-                    playSoundTone(currentNote.freq, 0.1, currentNote.type, 0.05);
-                    if (bgmStep % 4 === 0) playSoundTone(130.81, 0.12, 'sawtooth', 0.12);
-                    else if (bgmStep % 4 === 2) playSoundTone(146.83, 0.1, 'triangle', 0.08);
+                    playSoundTone(notes[bgmStep % notes.length], 0.15, 'triangle', 0.04);
                     bgmStep++;
-                }, 170);
+                }, 220);
             } else {
                 btnText.innerText = "Musik: OFF";
                 clearInterval(bgmInterval);
             }
         }
 
-        function toggleVoiceOver() {
+        function toggleVoiceOver(e) {
+            if (e) e.stopPropagation();
             isVoEnabled = !isVoEnabled;
-            const statusLabel = document.getElementById('voStatus');
-            if (isVoEnabled) {
-                statusLabel.innerText = "Suara/VO: ON";
-                speakText("Pengisi suara diaktifkan");
-            } else {
-                statusLabel.innerText = "Suara/VO: OFF";
-                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-            }
+            document.getElementById('voStatus').innerText = isVoEnabled ? "Suara/VO: ON" : "Suara/VO: OFF";
+            if (!isVoEnabled && 'speechSynthesis' in window) window.speechSynthesis.cancel();
         }
 
         function speakText(text) {
             if (isVoEnabled && 'speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                const speech = new SpeechSynthesisUtterance(text);
+                const speech = new SpeechSynthesisUtterance(text.replace(/<[^>]*>?/gm, ''));
                 speech.lang = 'id-ID';
                 speech.rate = 0.95;
                 window.speechSynthesis.speak(speech);
@@ -572,13 +522,9 @@
 
         function readQuestionVoice() {
             const q = quizData[currentIdx];
-            let cleanText = q.question.replace(/\n/g, ' ');
-            speakText(`Soal nomor ${currentIdx + 1}. ${cleanText}`);
+            speakText(`Soal nomor ${currentIdx + 1}. ${q.question}`);
         }
 
-        // ==========================================
-        // 4. LOGIKA KUIS & RENDERER SLIDE
-        // ==========================================
         function startQuizSession() {
             const nama = document.getElementById('inputNama').value.trim();
             const absen = document.getElementById('inputAbsen').value.trim();
@@ -590,6 +536,7 @@
 
             studentProfile.name = nama;
             studentProfile.absen = absen;
+            userAnswers = {};
             initAudioContext();
             playClickSound();
 
@@ -616,76 +563,76 @@
             document.getElementById('progressText').innerText = `Soal ${index + 1} dari ${quizData.length}`;
             document.getElementById('progressBar').style.width = `${((index + 1) / quizData.length) * 100}%`;
             document.getElementById('questionBadge').innerText = `Soal #${index + 1}`;
-            document.getElementById('questionText').innerText = q.question;
+            document.getElementById('questionText').innerHTML = q.question.replace(/\n/g, '<br>');
 
             const container = document.getElementById('answerOptionsContainer');
             container.innerHTML = '';
 
             if (q.type === 'mc') {
-                q.options.forEach(opt => {
+                q.options.forEach((opt, idx) => {
                     const letter = opt.charAt(0);
                     const isChecked = userAnswers[`q${q.id}`] === letter;
-                    const optId = `opt_${q.id}_${letter}`;
                     container.innerHTML += `
-                        <label for="${optId}" onclick="playClickSound()" class="flex items-center p-3.5 rounded-xl border-2 transition cursor-pointer hover:bg-blue-50/50 ${isChecked ? 'border-blue-600 bg-blue-50 font-semibold' : 'border-slate-200'}">
-                            <input type="radio" id="${optId}" name="q_${q.id}" value="${letter}" ${isChecked ? 'checked' : ''} onchange="saveMcAnswer(${q.id}, '${letter}')" class="w-4 h-4 text-blue-600">
-                            <span class="ml-3 text-sm text-slate-700">${opt}</span>
+                        <label onclick="playClickSound()" class="flex items-center p-3.5 rounded-xl border-2 transition cursor-pointer hover:bg-blue-50/50 ${isChecked ? 'border-blue-600 bg-blue-50 font-semibold text-blue-900' : 'border-slate-200 font-semibold text-slate-700'}">
+                            <input type="radio" name="q_${q.id}" value="${letter}" ${isChecked ? 'checked' : ''} onchange="saveMcAnswer(${q.id}, '${letter}')" class="w-4 h-4 text-blue-600">
+                            <span class="ml-3 text-sm">${opt}</span>
                         </label>
                     `;
                 });
             } else if (q.type === 'complex') {
-                let tableHtml = `<div class="overflow-x-auto border rounded-xl"><table class="w-full text-xs text-left"><thead class="bg-slate-100"><tr><th class="p-3">Pernyataan</th><th class="p-3 text-center w-24">Benar</th><th class="p-3 text-center w-24">Salah</th></tr></thead><tbody class="divide-y">`;
-                q.statements.forEach((st, idx) => {
-                    const key = `q${q.id}_s${idx}`;
-                    const val = userAnswers[key] || '';
+                let tableHtml = `<div class="overflow-x-auto border rounded-xl"><table class="w-full text-xs text-left"><thead class="bg-slate-100 font-bold uppercase"><tr><th class="p-3">Pernyataan</th><th class="p-3 text-center w-24">Benar</th><th class="p-3 text-center w-24">Salah</th></tr></thead><tbody class="divide-y bg-white">`;
+                q.statements.forEach((st) => {
+                    const selVal = (userAnswers[`q${q.id}`] || {})[st.id];
                     tableHtml += `
                         <tr>
-                            <td class="p-3 font-medium text-slate-700">${st.text}</td>
+                            <td class="p-3 font-semibold text-slate-800">${st.text}</td>
                             <td class="p-3 text-center">
-                                <input type="radio" name="${key}" value="Benar" ${val === 'Benar' ? 'checked' : ''} onchange="saveComplexAnswer('${key}', 'Benar')" class="w-4 h-4 text-emerald-600">
+                                <button onclick="saveComplexAnswer(${q.id}, '${st.id}', true)" class="px-3 py-1 rounded-lg border font-bold ${selVal === true ? 'bg-emerald-600 text-white' : 'bg-slate-50 text-slate-400'}">BENAR</button>
                             </td>
                             <td class="p-3 text-center">
-                                <input type="radio" name="${key}" value="Salah" ${val === 'Salah' ? 'checked' : ''} onchange="saveComplexAnswer('${key}', 'Salah')" class="w-4 h-4 text-rose-600">
+                                <button onclick="saveComplexAnswer(${q.id}, '${st.id}', false)" class="px-3 py-1 rounded-lg border font-bold ${selVal === false ? 'bg-rose-600 text-white' : 'bg-slate-50 text-slate-400'}">SALAH</button>
                             </td>
                         </tr>
                     `;
                 });
                 tableHtml += `</tbody></table></div>`;
                 container.innerHTML = tableHtml;
-            } else if (q.type === 'essay') {
-                const valDik = userAnswers[`q${q.id}_diketahui`] || '';
-                const valDit = userAnswers[`q${q.id}_ditanya`] || '';
-                const valJaw = userAnswers[`q${q.id}_jawab`] || '';
-                const valJad = userAnswers[`q${q.id}_jadi`] || '';
-
+            } else if (q.type === 'uraian_polya') {
+                const resp = userAnswers[`q${q.id}`] || {};
                 container.innerHTML = `
-                    <div class="space-y-4 text-xs md:text-sm">
-                        <div class="p-3.5 bg-indigo-50 border border-indigo-200 rounded-xl text-indigo-900 font-medium">
-                            <i class="fas fa-lightbulb text-amber-500 mr-1.5"></i>
-                            <strong>Petunjuk Pengerjaan Soal Uraian:</strong> Isi ke-4 komponen di bawah ini secara runtut untuk mendapatkan nilai sempurna (4 poin).
+                    <div class="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-4 text-left">
+                        <div class="border-b border-slate-200 pb-3">
+                            <label class="block font-bold text-slate-800 text-sm mb-1 flex items-center gap-2">
+                                <span class="bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">1</span> Memahami Masalah (1 Poin):
+                            </label>
+                            <p class="text-xs text-slate-500 mb-2">Tuliskan data yang diketahui dan hal yang ditanyakan dari soal.</p>
+                            <textarea oninput="savePolyaAnswer(${q.id}, 'p1', this.value)" rows="2" placeholder="Contoh: Diketahui: Jumlah barang dan harga per unit... Ditanya: Berapa total belanjaan / bagian tiap anak?" class="w-full p-3 rounded-xl border-2 border-slate-200 text-sm font-semibold outline-none focus:border-blue-500">${resp.p1 || ''}</textarea>
+                        </div>
+
+                        <div class="border-b border-slate-200 pb-3">
+                            <label class="block font-bold text-slate-800 text-sm mb-1 flex items-center gap-2">
+                                <span class="bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">2</span> Merencanakan Penyelesaian (1 Poin):
+                            </label>
+                            <p class="text-xs text-slate-500 mb-2">Tuliskan urutan langkah/rencana operasi hitung atau hal yang ditanyakan.</p>
+                            <input type="text" oninput="savePolyaAnswer(${q.id}, 'p2', this.value)" value="${resp.p2 || ''}" placeholder="Contoh: Rencana: Kalikan jumlah barang dengan harga, lalu kurangkan modal... (atau sebutkan hal yang ditanyakan)" class="w-full p-3 rounded-xl border-2 border-slate-200 text-sm font-semibold outline-none focus:border-blue-500">
+                        </div>
+
+                        <div class="border-b border-slate-200 pb-3">
+                            <label class="block font-bold text-slate-800 text-sm mb-1 flex items-center gap-2">
+                                <span class="bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">3</span> Melaksanakan Rencana (1 Poin):
+                            </label>
+                            <p class="text-xs text-slate-500 mb-2">Lakukan perhitungan angka secara lengkap hingga menemukan hasil akhir.</p>
+                            <textarea oninput="savePolyaAnswer(${q.id}, 'p3', this.value)" rows="2" placeholder="Contoh: Tuliskan proses hitungan angka secara berurutan..." class="w-full p-3 rounded-xl border-2 border-slate-200 text-sm font-semibold outline-none focus:border-blue-500">${resp.p3 || ''}</textarea>
                         </div>
 
                         <div>
-                            <label class="block font-bold text-slate-700 mb-1"><span class="bg-blue-600 text-white text-xs px-2 py-0.5 rounded mr-1">1</span> Diketahui:</label>
-                            <textarea oninput="saveEssayPart(${q.id}, 'diketahui', this.value)" rows="2" class="w-full p-2.5 border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Tuliskan data atau informasi angka yang diketahui dari soal...">${valDik}</textarea>
+                            <label class="block font-bold text-slate-800 text-sm mb-1 flex items-center gap-2">
+                                <span class="bg-blue-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs">4</span> Memeriksa Kembali & Kesimpulan (1 Poin):
+                            </label>
+                            <p class="text-xs text-slate-500 mb-2">Periksa hasil dan tuliskan kesimpulan lengkap dengan satuannya.</p>
+                            <input type="text" oninput="savePolyaAnswer(${q.id}, 'p4', this.value)" value="${resp.p4 || ''}" placeholder="Contoh: Periksa hasil hitungan. Jadi, hasil akhirnya adalah..." class="w-full p-3 rounded-xl border-2 border-slate-200 text-sm font-semibold outline-none focus:border-blue-500">
                         </div>
-
-                        <div>
-                            <label class="block font-bold text-slate-700 mb-1"><span class="bg-blue-600 text-white text-xs px-2 py-0.5 rounded mr-1">2</span> Ditanya:</label>
-                            <textarea oninput="saveEssayPart(${q.id}, 'ditanya', this.value)" rows="2" class="w-full p-2.5 border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Tuliskan apa yang ditanyakan pada soal...">${valDit}</textarea>
-                        </div>
-
-                        <div>
-                            <label class="block font-bold text-slate-700 mb-1"><span class="bg-blue-600 text-white text-xs px-2 py-0.5 rounded mr-1">3</span> Jawab (Langkah / Cara Hitung):</label>
-                            <textarea oninput="saveEssayPart(${q.id}, 'jawab', this.value)" rows="3" class="w-full p-2.5 border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Tuliskan rumus dan langkah pengerjaan hitungannya hingga menemukan hasil akhir...">${valJaw}</textarea>
-                        </div>
-
-                        <div>
-                            <label class="block font-bold text-slate-700 mb-1"><span class="bg-blue-600 text-white text-xs px-2 py-0.5 rounded mr-1">4</span> Jadi (Kesimpulan):</label>
-                            <textarea oninput="saveEssayPart(${q.id}, 'jadi', this.value)" rows="2" class="w-full p-2.5 border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Tuliskan kalimat kesimpulan akhir (Contoh: Jadi, masing-masing anggota mendapatkan...)...">${valJad}</textarea>
-                        </div>
-                    </div>
-                `;
+                    </div>`;
             }
 
             document.getElementById('btnPrev').disabled = (index === 0);
@@ -701,20 +648,124 @@
         }
 
         function saveMcAnswer(qId, val) { userAnswers[`q${qId}`] = val; }
-        function saveComplexAnswer(key, val) { userAnswers[key] = val; }
-        function saveEssayPart(qId, part, val) { userAnswers[`q${qId}_${part}`] = val; }
+        function saveComplexAnswer(qId, stmtId, val) {
+            if (!userAnswers[`q${qId}`]) userAnswers[`q${qId}`] = {};
+            userAnswers[`q${qId}`][stmtId] = val;
+            playClickSound();
+            renderQuestion(currentIdx);
+        }
+        function savePolyaAnswer(qId, stepKey, val) {
+            if (!userAnswers[`q${qId}`]) userAnswers[`q${qId}`] = {};
+            userAnswers[`q${qId}`][stepKey] = val;
+        }
 
         function navigateQuestion(direction) {
             playClickSound();
             const target = currentIdx + direction;
-            if (target >= 0 && target < quizData.length) {
-                renderQuestion(target);
-            }
+            if (target >= 0 && target < quizData.length) renderQuestion(target);
         }
 
-        // ==========================================
-        // 5. EVALUASI SKOR RUBRIK & SIMPAN DATA SISWA
-        // ==========================================
+        // EVALUASI POLYA SOAL 11-15 DENGAN FLEKSIBILITAS LANGKAH 2 (APABILA DIISI "YANG DITANYAKAN" TETAP BENAR)
+        function evaluateUraianPolya(qId, resp) {
+            if (!resp || typeof resp !== 'object') return 0;
+            let score = 0;
+            const p1 = (resp.p1 || '').toLowerCase();
+            const p2 = (resp.p2 || '').toLowerCase();
+            const p3 = (resp.p3 || '').toLowerCase();
+            const p4 = (resp.p4 || '').toLowerCase();
+
+            // DETEKSI APAKAH LANGKAH 2 DIISI TENTANG "YANG DITANYAKAN"
+            const isDitanyakanKeywords = p2.length >= 3 && (
+                p2.includes('ditanya') || 
+                p2.includes('yang ditanyakan') || 
+                p2.includes('mencari') || 
+                p2.includes('menentukan') || 
+                p2.includes('berapa') || 
+                p2.includes('apakah') || 
+                p2.includes('bagian') ||
+                p2.includes('sisa') ||
+                p2.includes('keuntungan')
+            );
+
+            if (qId === 11) {
+                // 1. Memahami
+                if (p1.length >= 3 && (p1.includes('92') || p1.includes('32') || p1.includes('5') || p1.includes('penjualan') || p1.includes('modal'))) score += 1;
+                
+                // 2. Merencanakan (Dianggap benar jika diisi rencana/strategi ATAU jika diisi "yang ditanyakan")
+                if (isDitanyakanKeywords || (p2.length >= 3 && (p2.includes('kurang') || p2.includes('bagi') || p2.includes('keuntungan') || p2.includes('rencana')))) {
+                    score += 1;
+                }
+                
+                // 3. Melaksanakan
+                if (p3.includes('12.000') || p3.includes('12000') || p3.includes('60.000') || p3.includes('60000')) score += 1;
+                
+                // 4. Memeriksa kembali
+                if (p4.includes('12.000') || p4.includes('12000') || p4.includes('12 ribu')) score += 1;
+            } 
+            else if (qId === 12) {
+                // 1. Memahami
+                if (p1.length >= 3 && (p1.includes('60') || p1.includes('7') || p1.includes('roti') || p1.includes('susu'))) score += 1;
+                
+                // 2. Merencanakan
+                if (isDitanyakanKeywords || (p2.length >= 3 && (p2.includes('belanja') || p2.includes('banding') || p2.includes('total') || p2.includes('cukup')))) {
+                    score += 1;
+                }
+                
+                // 3. Melaksanakan
+                if (p3.includes('63.000') || p3.includes('63000') || p3.includes('3.000') || p3.includes('3000')) score += 1;
+                
+                // 4. Memeriksa kembali
+                if (p4.includes('tidak') || p4.includes('kurang') || p4.includes('belum')) score += 1;
+            } 
+            else if (qId === 13) {
+                // 1. Memahami
+                if (p1.length >= 3 && (p1.includes('30') || p1.includes('2') || p1.includes('3') || p1.includes('1'))) score += 1;
+                
+                // 2. Merencanakan
+                if (isDitanyakanKeywords || (p2.length >= 3 && (p2.includes('total') || p2.includes('kurang') || p2.includes('belanja')))) {
+                    score += 1;
+                }
+                
+                // 3. Melaksanakan
+                if (p3.includes('25.000') || p3.includes('25000') || p3.includes('5.000') || p3.includes('5000')) score += 1;
+                
+                // 4. Memeriksa kembali
+                if (p4.includes('sisa') || p4.includes('5.000') || p4.includes('5000') || p4.includes('5 ribu')) score += 1;
+            } 
+            else if (qId === 14) {
+                // 1. Memahami
+                if (p1.length >= 3 && (p1.includes('12') || p1.includes('2') || p1.includes('1') || p1.includes('buah') || p1.includes('susu'))) score += 1;
+                
+                // 2. Merencanakan
+                if (isDitanyakanKeywords || (p2.length >= 3 && (p2.includes('belanja') || p2.includes('kurang') || p2.includes('sisa')))) {
+                    score += 1;
+                }
+                
+                // 3. Melaksanakan
+                if (p3.includes('9.000') || p3.includes('9000') || p3.includes('3.000') || p3.includes('3000')) score += 1;
+                
+                // 4. Memeriksa kembali
+                if (p4.includes('3.000') || p4.includes('3000') || p4.includes('3 ribu')) score += 1;
+            } 
+            else if (qId === 15) {
+                // 1. Memahami
+                if (p1.length >= 3 && (p1.includes('60') || p1.includes('15') || p1.includes('5') || p1.includes('sisih'))) score += 1;
+                
+                // 2. Merencanakan
+                if (isDitanyakanKeywords || (p2.length >= 3 && (p2.includes('kurang') || p2.includes('bagi') || p2.includes('sisih')))) {
+                    score += 1;
+                }
+                
+                // 3. Melaksanakan
+                if (p3.includes('45.000') || p3.includes('45000') || p3.includes('9.000') || p3.includes('9000')) score += 1;
+                
+                // 4. Memeriksa kembali
+                if (p4.includes('9.000') || p4.includes('9000') || p4.includes('9 ribu')) score += 1;
+            }
+
+            return score;
+        }
+
         function submitFinalQuiz() {
             if (!confirm('Apakah kamu sudah yakin ingin menyelesaikan seluruh Post-Test ini?')) return;
 
@@ -722,82 +773,84 @@
             playSuccessChime();
             confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
 
-            let itemScores = {};
-            let totalEarnedScore = 0;
+            let totalKonsepScore = 0; // max 15
+            let totalMasalahScore = 0; // max 20
+            let itemPayloadDetails = {};
 
             quizData.forEach(q => {
+                const resp = userAnswers[`q${q.id}`];
+
                 if (q.type === 'mc') {
-                    const ans = userAnswers[`q${q.id}`];
-                    const pts = (ans === q.answer) ? 1 : 0;
-                    itemScores[`q${q.id}`] = pts;
-                    totalEarnedScore += pts;
+                    let pts = (resp === q.answer) ? 1 : 0;
+                    totalKonsepScore += pts;
+                    itemPayloadDetails['q' + q.id] = pts;
                 } else if (q.type === 'complex') {
-                    let pts = 0;
-                    q.statements.forEach((st, idx) => {
-                        const ans = userAnswers[`q${q.id}_s${idx}`];
-                        if (ans === st.answer) pts += 1;
-                    });
-                    itemScores[`q${q.id}`] = pts;
-                    totalEarnedScore += pts;
-                } else if (q.type === 'essay') {
-                    let pts = 0;
-                    const dik = (userAnswers[`q${q.id}_diketahui`] || '').trim();
-                    const dit = (userAnswers[`q${q.id}_ditanya`] || '').trim();
-                    const jaw = (userAnswers[`q${q.id}_jawab`] || '').trim().toLowerCase();
-                    const jad = (userAnswers[`q${q.id}_jadi`] || '').trim().toLowerCase();
-
-                    if (dik.length >= 3) pts += 1;
-                    if (dit.length >= 3) pts += 1;
-                    if (jaw.length > 0 && q.rubric.jawab.some(kw => jaw.includes(kw))) {
-                        pts += 1;
+                    let correctCount = 0;
+                    if (resp) {
+                        q.statements.forEach(s => { if (resp[s.id] === s.isCorrect) correctCount++; });
                     }
-                    if (jad.length > 0 && q.rubric.jadi.some(kw => jad.includes(kw))) {
-                        pts += 1;
-                    }
-
-                    itemScores[`q${q.id}`] = pts;
-                    totalEarnedScore += pts;
-
-                    userAnswers[`q${q.id}`] = `[Diketahui]: ${dik} | [Ditanya]: ${dit} | [Jawab]: ${jaw} | [Jadi]: ${jad}`;
+                    let pts = 0;
+                    if (correctCount === 4) pts = 2;
+                    else if (correctCount === 3) pts = 1;
+                    
+                    totalKonsepScore += pts;
+                    itemPayloadDetails['q' + q.id] = pts;
+                } else if (q.type === 'uraian_polya') {
+                    let pts = evaluateUraianPolya(q.id, resp);
+                    totalMasalahScore += pts;
+                    itemPayloadDetails['q' + q.id] = pts;
                 }
             });
 
-            const finalGrade = Math.round((totalEarnedScore / 45) * 100);
+            const nilaiKonsep = Math.round((totalKonsepScore / 15) * 100);
+            const nilaiMasalah = Math.round((totalMasalahScore / 20) * 100);
+
             const mins = Math.floor(timerSeconds / 60);
             const secs = timerSeconds % 60;
-            const durationFormatted = `${mins}m ${secs}d`;
+            const durationFormatted = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
             const dateStr = new Date().toLocaleString('id-ID');
 
             document.getElementById('screenQuiz').classList.add('hidden');
             document.getElementById('screenResult').classList.remove('hidden');
-            document.getElementById('finalGradeDisplay').innerText = finalGrade;
-            document.getElementById('finalPointsDisplay').innerText = `Skor Diperoleh: ${totalEarnedScore} / 45 Poin`;
-            document.getElementById('finalTimeDisplay').innerHTML = `<i class="far fa-clock mr-1"></i>Durasi Pengerjaan: ${durationFormatted}`;
+
+            document.getElementById('conceptGradeDisplay').innerText = nilaiKonsep;
+            document.getElementById('conceptPointsDisplay').innerText = `Skor Mentah: ${totalKonsepScore} / 15`;
+            
+            document.getElementById('problemGradeDisplay').innerText = nilaiMasalah;
+            document.getElementById('problemPointsDisplay').innerText = `Skor Mentah: ${totalMasalahScore} / 20`;
+
+            document.getElementById('finalTimeDisplay').innerHTML = `<i class="far fa-clock mr-1 text-amber-500"></i>Durasi Pengerjaan: ${durationFormatted}`;
             document.getElementById('studentResultSummary').innerText = `Siswa: ${studentProfile.name} (${studentProfile.absen})`;
 
-            speakText(`Post test selesai. Selamat ${studentProfile.name}, nilai akhir kamu adalah ${finalGrade}`);
+            speakText(`Post test selesai. Selamat ${studentProfile.name}, Nilai Pemahaman Konsep kamu adalah ${nilaiKonsep}, dan Nilai Pemecahan Masalah kamu adalah ${nilaiMasalah}`);
 
-            // Save Record to Local Storage
+            // Save Record Local
             const record = {
+                date: dateStr,
                 name: studentProfile.name,
                 absen: studentProfile.absen,
                 duration: durationFormatted,
-                scorePoints: totalEarnedScore,
-                finalGrade: finalGrade,
-                date: dateStr
+                konsepScore: totalKonsepScore,
+                nilaiKonsep: nilaiKonsep,
+                masalahScore: totalMasalahScore,
+                nilaiMasalah: nilaiMasalah
             };
-            saveRecordToLocal(record);
+            let records = JSON.parse(localStorage.getItem('quiz_posttest_v2_records') || '[]');
+            records.push(record);
+            localStorage.setItem('quiz_posttest_v2_records', JSON.stringify(records));
 
-            // Send Record to Google Sheets
+            // Send to Apps Script
             const payload = {
                 timestamp: dateStr,
                 sesi: 'Post-Test',
                 name: studentProfile.name,
                 absen: studentProfile.absen,
-                scorePoints: totalEarnedScore,
-                grade: finalGrade,
                 durationFormatted: durationFormatted,
-                ...itemScores
+                konsepScore: totalKonsepScore,
+                nilaiKonsep: nilaiKonsep,
+                masalahScore: totalMasalahScore,
+                nilaiMasalah: nilaiMasalah,
+                ...itemPayloadDetails
             };
 
             if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL.startsWith('http')) {
@@ -810,15 +863,6 @@
             }
         }
 
-        function saveRecordToLocal(record) {
-            let records = JSON.parse(localStorage.getItem('quiz_posttest_records') || '[]');
-            records.push(record);
-            localStorage.setItem('quiz_posttest_records', JSON.stringify(records));
-        }
-
-        // ==========================================
-        // 6. PORTAL GURU LOGIKA & REKAP DATA
-        // ==========================================
         function openTeacherPortal() {
             const pass = prompt('Masukkan Kata Sandi Guru:');
             if (pass === TEACHER_PASS) {
@@ -838,61 +882,56 @@
         }
 
         function renderTeacherTable() {
-            const records = JSON.parse(localStorage.getItem('quiz_posttest_records') || '[]');
+            const records = JSON.parse(localStorage.getItem('quiz_posttest_v2_records') || '[]');
             const tbody = document.getElementById('teacherTableBody');
             tbody.innerHTML = '';
 
             if (records.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">Belum ada rekap data siswa tersimpan di browser ini.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">Belum ada data rekap tersimpan di browser ini.</td></tr>`;
                 return;
             }
 
             records.forEach((r, idx) => {
                 tbody.innerHTML += `
                     <tr>
-                        <td class="p-3">${idx + 1}</td>
+                        <td class="p-3 font-bold">#${idx + 1}</td>
+                        <td class="p-3 text-slate-500">${r.date}</td>
                         <td class="p-3 font-bold text-slate-800">${r.name}</td>
                         <td class="p-3">${r.absen}</td>
-                        <td class="p-3">${r.duration}</td>
-                        <td class="p-3 font-semibold">${r.scorePoints} / 45</td>
-                        <td class="p-3 font-black text-blue-600 text-sm">${r.finalGrade}</td>
-                        <td class="p-3 text-slate-500">${r.date}</td>
+                        <td class="p-3 font-semibold text-amber-600">${r.duration}</td>
+                        <td class="p-3"><span class="px-2 py-1 rounded font-bold text-xs bg-indigo-100 text-indigo-700">${r.nilaiKonsep} (${r.konsepScore}/15)</span></td>
+                        <td class="p-3"><span class="px-2 py-1 rounded font-bold text-xs bg-emerald-100 text-emerald-700">${r.nilaiMasalah} (${r.masalahScore}/20)</span></td>
                     </tr>
                 `;
             });
         }
 
         function downloadExcelRecap() {
-            const records = JSON.parse(localStorage.getItem('quiz_posttest_records') || '[]');
-            if (records.length === 0) {
-                alert('Tidak ada data rekap untuk diunduh!');
-                return;
-            }
+            const records = JSON.parse(localStorage.getItem('quiz_posttest_v2_records') || '[]');
+            if (records.length === 0) return alert('Tidak ada data rekap!');
 
-            let csvContent = "data:text/csv;charset=utf-8,No,Nama Siswa,Kelas/Absen,Waktu Pengerjaan,Skor Mentah,Nilai Akhir,Tanggal\n";
+            let csvContent = "\uFEFFNo,Waktu Pengerjaan,Nama Siswa,Kelas/Absen,Durasi,Skor Konsep (15),Nilai Konsep (100),Skor Masalah (20),Nilai Masalah (100)\n";
             records.forEach((r, i) => {
-                csvContent += `${i+1},"${r.name}","${r.absen}",${r.duration},${r.scorePoints},${r.finalGrade},"${r.date}"\n`;
+                csvContent += `${i+1},"${r.date}","${r.name}","${r.absen}","${r.duration}",${r.konsepScore},${r.nilaiKonsep},${r.masalahScore},${r.nilaiMasalah}\n`;
             });
 
-            const encodedUri = encodeURI(csvContent);
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "Rekap_Nilai_PostTest.csv");
+            link.setAttribute("href", url);
+            link.setAttribute("download", `Rekap_Nilai_PostTest_${new Date().toISOString().slice(0,10)}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
 
         function clearLocalStorageData() {
-            if (confirm('Apakah Anda yakin ingin menghapus seluruh data rekap nilai Post-Test di browser ini?')) {
-                localStorage.removeItem('quiz_posttest_records');
+            if (confirm('Apakah Anda yakin ingin menghapus SELURUH rekap data Post-Test di browser ini?')) {
+                localStorage.removeItem('quiz_posttest_v2_records');
                 renderTeacherTable();
             }
         }
 
-        // ==========================================
-        // 7. POPUP WACANA & NAVIGASI PALET
-        // ==========================================
         function openWacanaModal() { document.getElementById('modalWacana').classList.remove('hidden'); }
         function closeWacanaModal() { document.getElementById('modalWacana').classList.add('hidden'); }
 
@@ -903,12 +942,13 @@
                 grid.innerHTML = '';
                 quizData.forEach((q, idx) => {
                     let answered = false;
-                    if (q.type === 'mc' && userAnswers[`q${q.id}`]) answered = true;
-                    if (q.type === 'complex' && userAnswers[`q${q.id}_s0`]) answered = true;
-                    if (q.type === 'essay' && (userAnswers[`q${q.id}_diketahui`] || userAnswers[`q${q.id}_jawab`])) answered = true;
+                    const resp = userAnswers[`q${q.id}`];
+                    if (q.type === 'mc' && resp) answered = true;
+                    if (q.type === 'complex' && resp && Object.keys(resp).length > 0) answered = true;
+                    if (q.type === 'uraian_polya' && resp && (resp.p1 || resp.p3)) answered = true;
 
                     grid.innerHTML += `
-                        <button onclick="renderQuestion(${idx}); togglePaletteModal();" class="p-2.5 rounded-xl font-bold text-xs border ${idx === currentIdx ? 'bg-blue-600 text-white border-blue-600' : (answered ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-slate-100 text-slate-700')}">
+                        <button onclick="renderQuestion(${idx}); togglePaletteModal();" class="p-2.5 rounded-xl font-bold text-xs border ${idx === currentIdx ? 'bg-blue-600 text-white border-blue-600' : (answered ? 'bg-emerald-500 text-white border-emerald-500' : 'bg-slate-100 text-slate-700')}">
                             ${idx + 1}
                         </button>
                     `;
